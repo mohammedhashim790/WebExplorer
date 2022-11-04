@@ -1,6 +1,7 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {APIService} from "../../Bloc/Services/API/api.service";
 import {printer} from "../../app.component";
+import {Folder} from "../../Bloc/Wrappers/Folder";
 
 @Component({
   selector: 'app-list-drives',
@@ -9,6 +10,7 @@ import {printer} from "../../app.component";
 })
 export class ListDrivesComponent implements OnInit {
   drives: Array<string> = [];
+
 
   @Output() public onSelectDrive = new EventEmitter<string>();
 

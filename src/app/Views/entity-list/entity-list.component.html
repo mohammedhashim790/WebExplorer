@@ -1,5 +1,17 @@
 <div class="grid-content">
-  <span class="item" *ngFor="let _ of range()">
+  <ng-container *ngIf="folders!=undefined">
+    <span class="item"
+          (dblclick)="navigateTo(folder)"
+          *ngFor="let folder of folders.subFolders">
+      <mat-icon><i class="ph-folder"></i></mat-icon>
+      <label>{{folder.Name}}</label>
+    </span>
+  </ng-container>
 
-  </span>
+  <ng-container *ngIf="folders!=undefined">
+    <span class="item" *ngFor="let file of folders.files">
+      <mat-icon><i class="ph-file"></i></mat-icon>
+      <label [title]="file.Name">{{file.Name | shortify}}</label>
+    </span>
+  </ng-container>
 </div>

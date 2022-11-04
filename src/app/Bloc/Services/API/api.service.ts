@@ -43,8 +43,8 @@ export class APIService {
   }
 
 
-  ReadFromFolderById(id: string):Observable<any> {
-    return this.httpClient.put<any>(
+  ReadFromFolderById(id: string):Observable<Folder> {
+    return this.httpClient.put<Folder>(
       environment.apiUrl + "/ListFrom",
       {
         parentId:id
@@ -54,7 +54,7 @@ export class APIService {
   }
 
   ReadFromFolderByName(drive: string) {
-    return this.httpClient.put<any>(
+    return this.httpClient.put<Folder>(
       environment.apiUrl + "/ListFrom",
       {
         parent:drive
@@ -64,7 +64,7 @@ export class APIService {
   }
 
   SyncDB(drive:string){
-    return this.httpClient.post<any>(
+    return this.httpClient.post<Folder>(
       environment.apiUrl + "/Update",
       {
         parent:drive

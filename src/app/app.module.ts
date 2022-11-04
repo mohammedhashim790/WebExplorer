@@ -14,6 +14,8 @@ import { EntityListComponent } from './Views/entity-list/entity-list.component';
 import { FolderComponent } from './Views/Components/folder/folder.component';
 import { FileComponent } from './Views/Components/file/file.component';
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {MatFormFieldModule} from "@angular/material/form-field";
+import { ShortifyPipe } from './Bloc/Pipes/Shortify/shortify.pipe';
 
 @NgModule({
   declarations: [
@@ -24,16 +26,18 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
     EntityListComponent,
     FolderComponent,
     FileComponent,
+    ShortifyPipe,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    MatButtonModule,
-    HttpClientModule,
-    MatIconModule,
-    MatProgressSpinnerModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        MatButtonModule,
+        HttpClientModule,
+        MatIconModule,
+        MatProgressSpinnerModule,
+        MatFormFieldModule
+    ],
   providers: [],
 
   bootstrap: [AppComponent]

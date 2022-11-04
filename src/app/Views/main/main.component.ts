@@ -21,6 +21,11 @@ export class MainComponent implements OnInit {
 
   private id!:string | null;
   public drive: string = "0";
+  public currentFolder!: Folder;
+
+  get Path(){
+    return this.currentFolder.Path.split('/');
+  }
 
   constructor(
     private api:APIService,
@@ -72,6 +77,9 @@ export class MainComponent implements OnInit {
       this.api.ReadFromFolderById(this.id).toPromise().then((res)=>{
         printer("Res of "+ this.id);
         printer(res);
+        this.currentFolder = res as Folder;
+        printer(this.currentFolder);
+
       }).catch((err)=>{
         printer("Error");
         errorLogger(err);
@@ -79,9 +87,12 @@ export class MainComponent implements OnInit {
   }
 
   private ReadFromLocalDrive() {
-    this.api.ReadFromFolderByName(this.drive).toPromise().then((res)=>{
-      printer("Res of "+ this.drive);
-      printer(res);
+    let drive = this.drives![Number(this.drive)];
+    this.api.ReadFromFolderByName(drive).toPromise().then((res)=>{
+      printer("Res of "+ drive);
+      this.currentFolder = res as Folder;
+      printer(this.currentFolder);
+
     }).catch((err)=>{
       printer("Error from Drive");
       errorLogger(err);
@@ -90,14 +101,16 @@ export class MainComponent implements OnInit {
 
   private async SyncDatabase() {
 
-    // let res = await this.api.SyncDB(this.drives![0]).toPromise();
+    let res ;
+    // res = await this.api.SyncDB(this.drives![0]).toPromise();
     //
     // printer("Res  + " + this.drives![0]);
     // printer(res);
-    let res = await this.api.SyncDB(this.drives![1]).toPromise();
+    res = await this.api.SyncDB(this.drives![1]).toPromise();
     printer("Res  + " + this.drives![1]);
     printer(res);
-
+    this.currentFolder = res as Folder;
+    this.showSyncProgress = false;
 
   }
 }

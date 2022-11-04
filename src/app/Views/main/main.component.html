@@ -3,7 +3,7 @@
 
 </app-sync-menu>
 
-<span class="background-blur">
+<span *ngIf="showSyncProgress" class="background-blur">
   <span class="option-container">
     <span class="spinner">
 
@@ -18,20 +18,22 @@
 
 <div class="main">
   <span class="right-drive-list">
-    <app-list-drives>
+    <app-list-drives >
 
     </app-list-drives>
   </span>
   <span class="entity-list">
-    <span class="address-bar">
-      <button class="breadcrumb">
-        C
-      </button>
-      <span class="key">
-        <i class="ph-caret-right"></i>
-      </span>
+    <span class="address-bar" *ngIf="currentFolder!=undefined" >
+      <ng-container *ngFor="let path of Path;let index = index">
+        <button class="breadcrumb">
+          {{path}}
+        </button>
+        <span *ngIf="index<Path.length-1" class="key">
+          <i class="ph-caret-right"></i>
+        </span>
+      </ng-container>
     </span>
-    <app-entity-list>
+    <app-entity-list [folders]="currentFolder">
     </app-entity-list>
   </span>
 </div>

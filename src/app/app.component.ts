@@ -18,7 +18,7 @@ export class AppComponent {
 
   constructor(private api:APIService,private router:Router) {
 
-    this.router.navigate(["/0"]);
+    // this.router.navigate(["/1"]);
   }
 
 }
