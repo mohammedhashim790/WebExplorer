@@ -1,3 +1,24 @@
-<div>
+<div class="list">
+  <ng-container *ngIf="this.drives.length == 0;else driveList">
+    <button mat-flat-button
+            class="drive loader">
+    </button>
+    <button mat-flat-button
+            class="drive loader">
+    </button>
 
+
+  </ng-container>
+  <ng-template #driveList>
+    <button mat-flat-button
+            (click)="onSelectDrive.emit(drive)"
+            class="drive" *ngFor="let drive of drives">
+      <mat-icon>
+        <i class="ph-windows-logo"></i>
+      </mat-icon>
+      <label class="value">
+        Disk {{drive | titlecase}} :
+      </label>
+    </button>
+  </ng-template>
 </div>

@@ -1,0 +1,60 @@
+:host{
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+
+
+.right-drive-list{
+  width: 20%;
+  min-width: 100px;
+  max-width: 150px;
+  /*height: 100%;*/
+  display: flex;
+  padding: 2% 1%;
+  border-right: 2px solid lightslategrey;
+}
+
+.address-bar{
+  width: 98%;
+  /*min-height: 20px;*/
+  padding: 1%;
+  display: flex;
+  flex-direction: row;
+  background: white;
+}
+.address-bar .breadcrumb{
+  width: max-content;
+  padding: 1% 2%;
+  display: flex;
+  height: 100%;
+  background: transparent;
+  position: relative;
+  font-size: 16px;
+  font-weight: 700;
+  transition: all 250ms ease-in-out;
+}
+.key{
+  content: '>';
+  padding: 1%;
+  display: flex;
+  justify-content: center;
+  place-items: center;
+}
+.address-bar .breadcrumb:hover{
+  background: lightgrey;
+}
+
+
+.main{
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+.main .entity-list {
+  width: 100%;
+  background: slategrey;
+}
+

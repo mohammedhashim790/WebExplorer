@@ -1,0 +1,29 @@
+:host{
+  width: 100%;
+  height: 99%;
+  max-height: 99%;
+  display: flex;
+  justify-content: center;
+  /*place-items: center;*/
+  overflow: auto;
+}
+
+.item{
+  width: 150px;
+  height: 150px;
+  background: darkred;
+}
+
+
+.grid-content{
+  width: 100%;
+  height: max-content;
+  /*height: 100%;*/
+  padding: 2%;
+  display: grid;
+  grid-template-columns: repeat( auto-fit, minmax(180px, 1fr) );
+  gap: 10px;
+  justify-content: center;
+  /*place-items: center;*/
+  overflow: auto;
+}

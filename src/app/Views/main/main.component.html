@@ -1,3 +1,43 @@
-<app-list-drives>
 
-</app-list-drives>
+<app-sync-menu *ngIf="showSyncMenu">
+
+</app-sync-menu>
+
+<span class="background-blur">
+  <span class="option-container">
+    <span class="spinner">
+
+    </span>
+    <h4 style="width: 80%">
+      Syncing Your files. This may take 20-30 minutes of your time please wait.
+    </h4>
+  </span>
+</span>
+
+
+
+<div class="main">
+  <span class="right-drive-list">
+    <app-list-drives>
+
+    </app-list-drives>
+  </span>
+  <span class="entity-list">
+    <span class="address-bar">
+      <button class="breadcrumb">
+        C
+      </button>
+      <span class="key">
+        <i class="ph-caret-right"></i>
+      </span>
+    </span>
+    <app-entity-list>
+    </app-entity-list>
+  </span>
+</div>
+
+<span class="status-bar">
+  <label>
+    Syncing
+  </label>
+</span>
