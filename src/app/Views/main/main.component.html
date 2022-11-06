@@ -1,9 +1,22 @@
 
-<app-sync-menu *ngIf="showSyncMenu">
+<app-sync-menu *ngIf="showSyncMenu"
+               (onSelectDrive)="Sync($event)"
+               style="z-index:  1000">
 
 </app-sync-menu>
 
-<span *ngIf="showSyncProgress" class="background-blur">
+<span *ngIf="loading && currentFolder == undefined" class="background-blur">
+  <span class="option-container">
+    <span class="spinner">
+
+    </span>
+    <h4 style="width: 80%;text-align: center;justify-content: center">
+      Loading. Please wait.
+    </h4>
+  </span>
+</span>
+
+<span *ngIf="showSyncProgress" class="background-blur" style="z-index: 10000">
   <span class="option-container">
     <span class="spinner">
 
@@ -16,14 +29,15 @@
 
 
 
+
 <div class="main">
   <span class="right-drive-list">
-    <app-list-drives >
+    <app-list-drives (onSelectDrive)="OnSelectDrive($event)">
 
     </app-list-drives>
   </span>
-  <span class="entity-list">
-    <span class="address-bar" *ngIf="currentFolder!=undefined" >
+  <span class="entity-list" *ngIf="currentFolder!=undefined;else unsynced">
+    <span class="address-bar" *ngIf="currentFolder!=undefined;" >
       <ng-container *ngFor="let path of Path;let index = index">
         <button class="breadcrumb">
           {{path}}
@@ -36,6 +50,22 @@
     <app-entity-list [folders]="currentFolder">
     </app-entity-list>
   </span>
+
+  <ng-template #unsynced>
+    <span *ngIf="notSynced;else loader" style="display: flex;width: 100%;height: 100%;justify-content: center;place-items: center">
+      <h2>
+        DB is not synced.
+      </h2>
+      <h3>
+        <a (click)="SyncAll()">Click here to sync completey</a>
+      </h3>
+    </span>
+    <ng-template #loader>
+      <span class="spinner" style="margin: auto">
+
+      </span>
+    </ng-template>
+  </ng-template>
 </div>
 
 <span class="status-bar">

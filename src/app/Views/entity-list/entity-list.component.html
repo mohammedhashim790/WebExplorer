@@ -4,14 +4,14 @@
           (dblclick)="navigateTo(folder)"
           *ngFor="let folder of folders.subFolders">
       <mat-icon><i class="ph-folder"></i></mat-icon>
-      <label>{{folder.Name}}</label>
+      <label>{{folder.Path}}</label>
     </span>
   </ng-container>
 
   <ng-container *ngIf="folders!=undefined">
     <span class="item" *ngFor="let file of folders.files">
       <mat-icon><i class="ph-file"></i></mat-icon>
-      <label [title]="file.Name">{{file.Name | shortify}}</label>
+      <label [title]="file.Path">{{file.Name | shortify}}</label>
     </span>
   </ng-container>
 </div>

@@ -11,8 +11,8 @@
   </ng-container>
   <ng-template #driveList>
     <button mat-flat-button
-            (click)="onSelectDrive.emit(drive)"
-            class="drive" *ngFor="let drive of drives">
+            (click)="navigateTo(drive)"
+            class="drive" *ngFor="let drive of drives;let index = index">
       <mat-icon>
         <i class="ph-windows-logo"></i>
       </mat-icon>

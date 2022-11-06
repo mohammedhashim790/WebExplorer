@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {printer} from "../../app.component";
 
 @Component({
@@ -8,6 +8,8 @@ import {printer} from "../../app.component";
 })
 export class SyncMenuComponent implements OnInit {
 
+  @Output() onSelectDrive:EventEmitter<string> = new EventEmitter<string>();
+
   constructor() { }
 
   ngOnInit(): void {
@@ -15,5 +17,6 @@ export class SyncMenuComponent implements OnInit {
 
   SelectedDrive(event: string) {
     printer(event);
+    this.onSelectDrive.emit(event);
   }
 }

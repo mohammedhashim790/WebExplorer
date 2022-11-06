@@ -2,6 +2,7 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {APIService} from "../../Bloc/Services/API/api.service";
 import {printer} from "../../app.component";
 import {Folder} from "../../Bloc/Wrappers/Folder";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-list-drives',
@@ -14,7 +15,7 @@ export class ListDrivesComponent implements OnInit {
 
   @Output() public onSelectDrive = new EventEmitter<string>();
 
-  constructor(private api:APIService) {
+  constructor(private api:APIService,private router:Router) {
     this.api.ListDrives().toPromise().then((res)=>{
       if(res!=undefined)
           this.drives = res?.drives;
@@ -25,4 +26,7 @@ export class ListDrivesComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  navigateTo(index:string) {
+    this.onSelectDrive.emit(index)
+  }
 }

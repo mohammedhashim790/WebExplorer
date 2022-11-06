@@ -16,6 +16,7 @@ import { FileComponent } from './Views/Components/file/file.component';
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import { ShortifyPipe } from './Bloc/Pipes/Shortify/shortify.pipe';
+import {AppResource} from "./Bloc/Wrappers/AppResource";
 
 @NgModule({
   declarations: [
@@ -38,7 +39,7 @@ import { ShortifyPipe } from './Bloc/Pipes/Shortify/shortify.pipe';
         MatProgressSpinnerModule,
         MatFormFieldModule
     ],
-  providers: [],
+  providers: [AppResource],
 
   bootstrap: [AppComponent]
 })

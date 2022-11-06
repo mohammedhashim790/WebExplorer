@@ -22,8 +22,11 @@ export class MainComponent implements OnInit {
   private id!:string | null;
   public drive: string = "0";
   public currentFolder!: Folder;
+  loading: boolean = false;
+  notSynced: boolean = false;
 
   get Path(){
+    this.currentFolder.Path.replace("//","/")
     return this.currentFolder.Path.split('/');
   }
 
@@ -32,14 +35,16 @@ export class MainComponent implements OnInit {
     private router:Router,
     private routerParams:ActivatedRoute
   ) {
-    this.api.ListDrives().toPromise().then((res)=>{
-      if(res!=undefined) {
+    this.api.ListDrives().toPromise().then(async (res) => {
+      if (res != undefined) {
         this.drives = res?.drives;
-        this.drives = this.drives?.map((value)=> value+"://")
-        this.Init();
-        // this.SyncDatabase();
+        // this.Init();
+        this.Start();
       }
     });
+
+
+
   }
 
   Start(){
@@ -55,17 +60,7 @@ export class MainComponent implements OnInit {
   }
 
   Init(){
-    this.api.IsEmpty().toPromise().then((res)=>{
-      printer("Response");
-      printer(res);
-      this.showSyncProgress = true;
-      this.SyncDatabase();
-    }).catch((error)=>{
-      errorLogger("error");
-      errorLogger(error);
-      this.showSyncProgress = false;
-      this.Start();
-    });
+
   }
 
   ngOnInit(): void {
@@ -79,15 +74,19 @@ export class MainComponent implements OnInit {
         printer(res);
         this.currentFolder = res as Folder;
         printer(this.currentFolder);
-
       }).catch((err)=>{
         printer("Error");
         errorLogger(err);
+
       });
   }
 
-  private ReadFromLocalDrive() {
-    let drive = this.drives![Number(this.drive)];
+  ReadFromLocalDrive() {
+    let drive = this.drives![Number(this.drive)].toUpperCase();
+    printer("From Drive " + drive);
+    if(!drive.endsWith(":/")){
+      drive = drive + ":/";
+    }
     this.api.ReadFromFolderByName(drive).toPromise().then((res)=>{
       printer("Res of "+ drive);
       this.currentFolder = res as Folder;
@@ -96,21 +95,67 @@ export class MainComponent implements OnInit {
     }).catch((err)=>{
       printer("Error from Drive");
       errorLogger(err);
+      this.notSynced = true;
+      // this.SyncDatabase(drive);
     });
   }
 
-  private async SyncDatabase() {
+  Sync(drive:string){
+    this.SyncDatabase(drive);
+  }
 
-    let res ;
-    // res = await this.api.SyncDB(this.drives![0]).toPromise();
-    //
-    // printer("Res  + " + this.drives![0]);
-    // printer(res);
-    res = await this.api.SyncDB(this.drives![1]).toPromise();
-    printer("Res  + " + this.drives![1]);
-    printer(res);
-    this.currentFolder = res as Folder;
-    this.showSyncProgress = false;
+  private async SyncDatabase(drive:string) {
+
+    let index = this.drives?.indexOf(drive);
+    printer(drive);
+    if(!drive.endsWith(":/")){
+      drive = drive + ":/";
+    }
+    printer(drive);
+    printer("SYnc");
+    printer(index);
+
+    this.showSyncProgress = true;
+    this.showSyncMenu = false;
+    try{
+      let res = await this.api.SyncDB(drive).toPromise();
+
+      this.currentFolder = res as Folder;
+      this.showSyncProgress = false;
+    }catch (e) {
+
+    }finally {
+      this.router.routeReuseStrategy.shouldReuseRoute = ()=>false;
+      this.router.onSameUrlNavigation = 'reload';
+      this.router.navigate(["/"+index]);
+    }
+
+  }
+
+  SyncAll() {
+    let drive = this.drives![Number(this.drive)].toUpperCase();
+    printer("From Drive " + drive);
+    this.Sync(drive);
+  }
+
+  OnSelectDrive(drive: string) {
+    printer(drive);
+    printer(this.drives)
+    let index = this.drives?.indexOf(drive);
+    if(index!=-1){
+      this.router.routeReuseStrategy.shouldReuseRoute = ()=>false;
+      this.router.onSameUrlNavigation = 'reload';
+      this.router.navigate(["/"+index]);
+
+      // this.api.ReadFromFolderByName(drive).toPromise().then((res)=>{
+      //   printer("Res of "+ drive);
+      //   this.currentFolder = res as Folder;
+      //   printer(this.currentFolder);
+      // }).catch((error)=>{
+      //   errorLogger("No Data found. Syncing Data");
+      //   // this.Sync(drive);
+      // });
+    }
 
   }
 }
